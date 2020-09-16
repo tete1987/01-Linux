@@ -103,7 +103,7 @@ $ 匹配字符串的结束
 11) $1:表示当前行的第一个域……以此类推
 
 实战1：
-1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的null
+1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的shell
       awk -F：‘/root/{print $7}’ /etc/passwd
 2）打印/etc/passwd/的第二行信息
       awk -F：'NR==2{print $0}' /etc/passwd
