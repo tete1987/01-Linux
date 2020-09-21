@@ -68,3 +68,22 @@
         do 
               echo "hello"
         done
+实战：
+1.循环读取文件内容并输入： for i in $(cat dir.txt);do echo $i;done
+
+       3）循环：while
+             定义：
+             while condition
+             do 
+                   command
+              done
+
+         示例：
+         int=1
+         while(( $int<=5 ))
+         do
+               echo $int
+               let "int ++"
+          done
+实战：
+1.循环读取文件内容并输出：while read line;do echo $line;done<dir.txt
