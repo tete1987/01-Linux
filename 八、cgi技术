@@ -1,0 +1,21 @@
+1.cgi 简介
+   CGI是外部扩展应用程序与WWW服务器交互的一个标准接口。按照CGI标准编写的外部扩展应用程序可以处理客户端（一般是WWW浏览器）输入的协同工作数据，完成客户端与服务器的交互操作。
+1）工具
+CentOs 7 
+    需要先安装：epel-release 
+       curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+       yum install -y nginx fcgiwrap
+Ubuntu 18:
+       apt install -y nginx fcgiwrap
+2)fcgiwrap 配置
+    nohup fcgiwrap -f -c 4 s unix:/run/fcgiwrap.socket &
+注解：
+nohup：后台执行
+-f：
+-c 4 ：4个进程数
+s：
+
+2.Nginx
+3.fcgiwrap
+4.bash
+5.curl
