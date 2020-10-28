@@ -1,0 +1,39 @@
+十、Linux实战-抽奖脚本编写
+1.前提：已创建有名单的文件 例如：tmp.txt 文件
+2.解题思路：
+  1）首先，读取名单文件
+#!/bin/bash
+seeds=`while read line;do echo $line;done < tmp.txt`
+echo $seeds
+
+结果：读取文件之后，发现有的人员名称中有空格，需要将空格替换为“..”
+  2)替换人员姓名中的空格
+ #!/bin/bash
+ seeds=`while read line;do echo ${line// /..};done < tmp.txt`
+ echo $seeds
+
+  此处也可以使用sed处理。
+ 3)将脚本放置函数中：
+#!/bin/bash
+rand(){
+  local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
+  local count=0
+}
+rand
+
+bash语言中默认所有变量为全局变量，加local之后变更为局部变量。
+4）从seeds中筛选出一部分人
+#!/bin/bash
+rand(){
+  local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
+  local count=0
+  while [[$count != 1 ]];do
+    seeds=`for i in $seeds;do (($RANDOM%2)) && echo $i;done`
+    count=`echo "seeds" | wc -l`
+  done
+  echo $seeds
+}
+
+rand
+
+RANDOM 是一个随机数，任何一个数字对2取余之后只有1或0 的结果。当结果为0 时，&& 的结果为空，不进行打印；当为1时进行打印。
