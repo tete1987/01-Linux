@@ -81,3 +81,21 @@ grep -Eo '^([0-9]*.){3}[0-9]*' nginx.log |sort|uniq -c | sort -nr|head 3
 8)因为 . 在正则里会匹配所有，所有需要转义一下：
 grep -Eo '^([0-9]*\.){3}[0-9]*' nginx.log |sort|uniq -c |sort -nr|head 3
 
+3.将topics 后面的数字替换成number
+sed 's@topics/[0-9]*@topics/numbers@g' nginx.log
+
+注：@可换成任意字符
+
+4.将IP地址横向打印
+1）首先筛选IP地址：
+awk '{print $1}' nginx.log
+
+结果：每个IP地址都是一行，显示出来
+2)将后面的行追加到前面来：
+awk '{prinrt $1}' nginx.log |sed 'N;s/\n/|/g'
+
+注：N：把下一行追加到此行；   将  \n（换行符） 替换为 | 
+3）再加标记：
+awk '{print $1}' nginx.log | sed ':1;N;s/\n/|/g;t1'
+
+注：1可以变为任意字符，只要与t后面的数字一致即可，意为每次跳转的位置。
