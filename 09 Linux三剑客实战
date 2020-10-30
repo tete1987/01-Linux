@@ -14,9 +14,70 @@ echo "aaaaac
 bbbbbdd
 kkkkkf
 vvvvva" | awk '/aaaa/{print}'
-
 结果：aaaaac
 
 echo "aaaaac|bbbbb|cccc|kkkkkf|vvvvva" | awk -F '|' '{print $2}'
+结果：bbbbb（以 | 为分隔符，打印第二列）
 
-结果：bbbbb
+echo "aaaaac
+bbbbbdd
+kkkkkf
+vvvvva" |wc -l
+注：wc -l  返回个数。
+结果：4
+
+echo "aaaaad
+bbb|eee
+333|ttt
+ffff|ggg|uuuu"  | awk -F '|' 'NR!=1{print}' K >tmp.txt
+
+查看tmp.txt的结果是：
+bbb|eee
+333|ttt
+ffff|ggg|uuuu
+
+
+也可以使用命令加入到awk中，但不常用，如下：
+echo "sssss
+cccc
+dddd
+eeee" | awk '{cmd="echo cccc";system=(cmd)}'
+
+
+查看Nginx日志中的404 和500的报条数
+grep -E '404 | 500 ' nginx.log |wc -l
+
+结果：显示404 和500 的行数
+使用awk可使用下列写法：
+awk '$9~/404/500' nginx.log |wc -l
+
+注：$9 是日志中的第九列，~是print的简写，意思是只要遇到符合条件的就打印。awk中必须使用/ 才能标志这是正则。
+结果相同。
+
+2.找出日志中访问量最高的IP：
+解题思路：
+1）先筛选出日志中IP的列数：
+awk '{print $1}' nginx.log
+
+2)再对IP地址进行排序(sort)：
+awk '{print $1}' nginx.log |sort
+
+3）合并相同的IP地址(uniq -c)：
+awk '{print $1}' nginx.log |sort |uniq -c 
+
+4）对结果进行倒序排序：
+awk '{print $1}' nginx.log |sort |uniq -c|sort -nr
+
+5）找出前3(head)：
+awk '{print $1}' nginx.log | sort |uniq -c |sort -nr|head 3
+
+
+6)使用grep 进行找出日志中访问量最高的IP
+grep -Eo '^[0-9]*.[0-9]*.[0-9]*.[0-9]*' nginx.log |sort |uniq -c |sort -nr |head 3
+
+7) 将上面的写法优化一下：
+grep -Eo '^([0-9]*.){3}[0-9]*' nginx.log |sort|uniq -c | sort -nr|head 3
+
+8)因为 . 在正则里会匹配所有，所有需要转义一下：
+grep -Eo '^([0-9]*\.){3}[0-9]*' nginx.log |sort|uniq -c |sort -nr|head 3
+
