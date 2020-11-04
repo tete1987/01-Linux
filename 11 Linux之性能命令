@@ -59,6 +59,32 @@ sy：内核进程，系统进程消耗cpu时间(system time)
 id：空闲(包括IO等待时间)
 wa：等等IO时间（Wa过高时，说明io等待比较严重，这可能是由于磁盘大量随机访问造成的，也有可能是磁盘的带宽出现瓶颈。）
 
+7.提高runnable （是最方便的提高性能的方法之一）
+写一个死循环脚本，使其运行50次，  &表明后台运行
+1）第一种写法：
+#!/bin/bash
+for i in {1..50};do
+ {while true;do
+     ((2+2))
+   done  
+ } &
+done
+
+
+2）第二种写法：
+#!/bin/bash
+for ((i=0;i<50;i++));do
+ {while true;do
+    ((2+2))
+   done  
+ } &
+done
+
+
+查看进程：
+ps -aux | grep test.sh | awk '{cmd ="kill -9 " $2;system(cmd)}'
+
+
 常见问题处理
 如果r经常大于4，且id经常少于40，表示cpu的负荷很重。
 如果pi，po长期不等于0，表示内存不足。
@@ -75,3 +101,25 @@ wa：等等IO时间（Wa过高时，说明io等待比较严重，这可能是由
 2.增加系统的内存.
 3. Implement priority paging in s in pre solaris 8 versions by adding line "set priority paging=1" in /etc/system. Remove this line if upgrading from Solaris 7 to 8 & retaining old /etc/system file.
 关于内存的使用情况还可以结ps aux top  prstat –a等等一些相应的命令来综合考虑关于具体的内存的使用情况,和那些进程在占用大量的内存.一般情况下，如果内存的占用率比较高,但是,CPU的占用很低的时候,可以考虑是有很多的应用程序占用了内存没有释放,但是,并没有占用CPU时间,可以考虑应用程序,对于未占用CPU时间和一些后台的程序,释放内存的占用。
+
+
+8.iostat 1 : 块设备（磁盘）的状况
+tps：每秒进程下发的IO读、写请求数量
+kB_read/s:每秒从驱动器读入的数据量
+kB_wrtn/s:每秒从驱动器写入的数据量
+kB_read:读入数据总量
+kB_wrtn:写入数据总量
+
+9. Linux 文件
+一切皆是文件
+    cd/dev
+设备是由udev进行管理，udev配置文件
+   /etc/udev/udev.conf
+   
+11.top
+-n ：获取多次CPU的执行情况，top -n 4 只更新4次
+-d ：间隔时间，top -4 每隔4秒 更新一次
+-p ：获取指定端口的进程的数据，top -p 4444
+
+for i in {1..20};do top -n |-p 1|grep systemd |awk '{print $11}'; done
+
