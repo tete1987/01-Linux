@@ -1,11 +1,11 @@
-#一、Linux基本使用方法
-##1.常用的shell：
+一、Linux基本使用方法
+1.常用的shell：
 - Bourne Shell（/user/bin/sh或/bin/sh）
 - Bourne Again Shell (/bin/bash)
 - C Shell (/user/bin/csh)
 - K Shell (/user/bin/ksh)
 - Shell for Root(/sbin/sh)
-##2. bash 示例：
+2. bash 示例：
   ```
     #!/bin/bash'
     echo "hello!" 
@@ -19,7 +19,7 @@
    指定了Bourne shell 
    执行（与Bourne Again shell 区别很小）
    
-##3.实战演练：
+3.实战演练：
 - ls：查看文件目录
 - rm -rf  test.sh :删除test.sh文件
 - vim test.sh:新建test.sh文件的同时进行编辑
