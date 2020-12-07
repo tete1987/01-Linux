@@ -192,35 +192,46 @@ sed是流编辑器，一次处理一行内容。
      ` sed -i 's/root/hello/g' test.txt`
      
 ## 5.awk:
-把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分在进行后续处理。
+定义：把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分在进行后续处理。
+
 把行作为输入，并赋值给$0—>将行切段，从$1开始—>对行匹配正则/执行动作—>打印内容—>（循环到）把行作为输入，并赋值给$0
+
 命令形式：awk 'pattern+action'[FILE]
+
 命令解析：
-1）pattern+action
-      -pattern 正则表达式
-      -action 对匹配到的内容执行的命令（默认为输出每行内容）
+- 1）pattern+action
+     - -pattern 正则表达式
+     - -action 对匹配到的内容执行的命令（默认为输出每行内容）
 
 常用参数：
-- 1) FILENEME:awk 浏览的文件名
-- 2) BEGIN：处理文本之前要执行的操作
-- 3) END：处理文本之后要执行的操作
-- 4) FS：设置输入域分隔符，等价于命令行 -F选项
-- 5) NF：浏览记录的域的个数（列数）
-- 6) NR：已读的记录数（行数）
-- 7) OFS:输出域分隔符
-- 8) ORS:输出记录分隔符
-- 9) RS:控制记录分隔符
-- 10) $0:整条记录
-- 11) $1:表示当前行的第一个域……以此类推
+- 1） FILENEME:awk 浏览的文件名
+- 2） BEGIN：处理文本之前要执行的操作
+- 3） END：处理文本之后要执行的操作
+- 4） FS：设置输入域分隔符，等价于命令行 -F选项
+- 5） NF：浏览记录的域的个数（列数）
+- 6） NR：已读的记录数（行数）
+- 7） OFS:输出域分隔符
+- 8） ORS:输出记录分隔符
+- 9） RS:控制记录分隔符
+- 10） $0:整条记录
+- 11）$1:表示当前行的第一个域……以此类推
 
 实战1：
-- 1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的shell
-         `awk -F：‘/root/{print $7}’ /etc/passwd`
-- 2）打印/etc/passwd/的第二行信息
-         `awk -F：'NR==2{print $0}' /etc/passwd`
+
+1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的shell
+      
+    `awk -F：‘/root/{print $7}’ /etc/passwd`
+
+2）打印/etc/passwd/的第二行信息
+
+    `awk -F：'NR==2{print $0}' /etc/passwd`
 
 实战2：
-- 1）使用begin加入标题
-         `awk 'BEGIN {print "BEGIN","BEGIN"}{print $1 $2}' /etc/passwd `
-- 2）自定义分隔符
-         `ech "111 222|333 444|555 666"|awk ‘BEGIN{NR=“|”}{print  $0}’`
+1）使用begin加入标题
+
+`awk 'BEGIN {print "BEGIN","BEGIN"}{print $1 $2}' /etc/passwd `
+
+2）自定义分隔符
+
+`ech "111 222|333 444|555 666"|awk ‘BEGIN{NR=“|”}{print  $0}’`
+
