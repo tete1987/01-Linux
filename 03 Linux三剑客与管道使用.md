@@ -49,13 +49,10 @@ Linux提供管道符“|”将两个命令隔开，管道符左边命令的输�
 6) -E：使用ERE，相当于egrep
 
 实战1：
-1）查找文件内容包含root的行数：`grep -n root test.txt`
-
-2）查找文件内容不包含root的行：`grep -nv root test.txt`
-
-3）查找以s开头的行：`grep  ^s test.txt`
-
-4）查找以n结尾的行：`grep n$ test.txt`
+- 1）查找文件内容包含root的行数：grep -n root test.txt
+- 2）查找文件内容不包含root的行：grep -nv root test.txt
+- 3）查找以s开头的行：grep  ^s test.txt
+- 4）查找以n结尾的行：grep n$ test.txt
 
 ## 4.sed：
 sed是流编辑器，一次处理一行内容。
@@ -71,63 +68,69 @@ sed是流编辑器，一次处理一行内容。
      -f<script文件>：以选项中指定的script文件来处理输入的文本文件。 
 
 常用动作：
-1）a：新增  sed -e '4 a newline'(使用sed执行一个脚本，脚本的内容是：在第四行新增加一个 newline)
-2）c：取代  sed -e '2,5c No 2-5 number'（使用sed执行一个脚本，脚本的内容是使用“No 2-5 number”来取代2到5行的内容）
-3）d：删除  sed -e '2,5d'（使用sed执行一个脚本，脚本的内容是删除2到5行）
-4）i：插入   sed -e '2i newline'(使用sed执行一个脚本，脚本的内容是：在第二行前面插入一个新行，叫： newline)
-5）p: 打印    sed -n '/root/p'（打印匹配到“root”的内容）
-6）s：取代   sed -e 's/old/new/g'（使用后面的内容new取代前面的old，/g 是代表全局的意思）
+- 1）a：新增  sed -e '4 a newline'(使用sed执行一个脚本，脚本的内容是：在第四行新增加一个 newline)
+- 2）c：取代  sed -e '2,5c No 2-5 number'（使用sed执行一个脚本，脚本的内容是使用“No 2-5 number”来取代2到5行的内容）
+- 3）d：删除  sed -e '2,5d'（使用sed执行一个脚本，脚本的内容是删除2到5行）
+- 4）i：插入   sed -e '2i newline'(使用sed执行一个脚本，脚本的内容是：在第二行前面插入一个新行，叫： newline)
+- 5）p: 打印    sed -n '/root/p'（打印匹配到“root”的内容）
+- 6）s：取代   sed -e 's/old/new/g'（使用后面的内容new取代前面的old，/g 是代表全局的意思）
 
 实战1：
 1）查看帮助：
-  `man  sed
-   sed -h`
-
+      `man  sed
+      sed -h`
 2）在第四行后天就新的字符串：
-    ` sed  '4 a neline testfile' test.txt`
-
+      ` sed  '4 a neline testfile' test.txt`
 3）在第二行后加上newline
-     `sed ‘2a drink tea’ test.txt`
-
+      `sed ‘2a drink tea’ test.txt`
 4）在第二行前加上newline
      ` sed '2i drink tea' test.txt`
-
 5）全局替换
       `sed -e ‘s/root/hello/g’ test.txt`
-
 6）直接修改文件内容
      ` sed -i 's/root/hello/g' test.txt`
      
 ## 5.awk:
-把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分在进行后续处理。
+定义：把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分在进行后续处理。
+
 把行作为输入，并赋值给$0—>将行切段，从$1开始—>对行匹配正则/执行动作—>打印内容—>（循环到）把行作为输入，并赋值给$0
+
 命令形式：awk 'pattern+action'[FILE]
+
 命令解析：
-1）pattern+action
-      -pattern 正则表达式
-      -action 对匹配到的内容执行的命令（默认为输出每行内容）
+- 1）pattern+action
+     - -pattern 正则表达式
+     - -action 对匹配到的内容执行的命令（默认为输出每行内容）
 
 常用参数：
-1）FILENEME:awk 浏览的文件名
-2）BEGIN：处理文本之前要执行的操作
-3）END：处理文本之后要执行的操作
-4）FS：设置输入域分隔符，等价于命令行 -F选项
-5）NF：浏览记录的域的个数（列数）
-6）NR：已读的记录数（行数）
-7）OFS:输出域分隔符
-8）ORS:输出记录分隔符
-9）RS:控制记录分隔符
-10)$0:整条记录
-11)$1:表示当前行的第一个域……以此类推
+- 1） FILENEME:awk 浏览的文件名
+- 2） BEGIN：处理文本之前要执行的操作
+- 3） END：处理文本之后要执行的操作
+- 4） FS：设置输入域分隔符，等价于命令行 -F选项
+- 5） NF：浏览记录的域的个数（列数）
+- 6） NR：已读的记录数（行数）
+- 7） OFS:输出域分隔符
+- 8） ORS:输出记录分隔符
+- 9） RS:控制记录分隔符
+- 10） $0:整条记录
+- 11）$1:表示当前行的第一个域……以此类推
 
 实战1：
-- 1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的shell
-      `awk -F：‘/root/{print $7}’ /etc/passwd`
-- 2）打印/etc/passwd/的第二行信息
-      `awk -F：'NR==2{print $0}' /etc/passwd`
+
+1）搜索/etc/passwd 有root 关键字的所有行，并显示对应的shell
+      
+    `awk -F：‘/root/{print $7}’ /etc/passwd`
+
+2）打印/etc/passwd/的第二行信息
+
+    `awk -F：'NR==2{print $0}' /etc/passwd`
 
 实战2：
-- 1）使用begin加入标题
-      `awk 'BEGIN {print "BEGIN","BEGIN"}{print $1 $2}' /etc/passwd `
-- 2）自定义分隔符
-      `ech "111 222|333 444|555 666"|awk ‘BEGIN{NR=“|”}{print  $0}’`
+
+1）使用begin加入标题
+
+`awk 'BEGIN {print "BEGIN","BEGIN"}{print $1 $2}' /etc/passwd `
+
+2）自定义分隔符
+
+`ech "111 222|333 444|555 666"|awk ‘BEGIN{NR=“|”}{print  $0}’`
