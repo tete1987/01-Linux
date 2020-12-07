@@ -77,16 +77,21 @@ sed是流编辑器，一次处理一行内容。
 
 实战1：
 1）查看帮助：
-      `man  sed
-      sed -h`
+  `man  sed
+   sed -h`
+
 2）在第四行后天就新的字符串：
-      ` sed  '4 a neline testfile' test.txt`
+    ` sed  '4 a neline testfile' test.txt`
+
 3）在第二行后加上newline
-      `sed ‘2a drink tea’ test.txt`
+     `sed ‘2a drink tea’ test.txt`
+
 4）在第二行前加上newline
      ` sed '2i drink tea' test.txt`
+
 5）全局替换
       `sed -e ‘s/root/hello/g’ test.txt`
+
 6）直接修改文件内容
      ` sed -i 's/root/hello/g' test.txt`
      
@@ -104,11 +109,11 @@ sed是流编辑器，一次处理一行内容。
 - 2）BEGIN：处理文本之前要执行的操作
 - 3）END：处理文本之后要执行的操作
 - 4）FS：设置输入域分隔符，等价于命令行 -F选项
-- 5) NF：浏览记录的域的个数（列数）
-- 6) NR：已读的记录数（行数）
-- 7) OFS:输出域分隔符
-- 8) ORS:输出记录分隔符
-- 9) RS:控制记录分隔符
+- 5）NF：浏览记录的域的个数（列数）
+- 6）NR：已读的记录数（行数）
+- 7）OFS:输出域分隔符
+- 8）ORS:输出记录分隔符
+- 9）RS:控制记录分隔符
 - 10)$0:整条记录
 - 11)$1:表示当前行的第一个域……以此类推
 
