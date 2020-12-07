@@ -1,6 +1,5 @@
-二、Linux的常用命令
-
-1.文件
+# 二、Linux的常用命令
+## 1.文件
    1）基本命令   
    - ls：列出目录
    - cd：切换目录
@@ -43,7 +42,7 @@ d r w x r - x r -x
 
 - chmod 777 test：给所有人对test文件增加 所有权限
 
-2.网络
+## 2.网络
 1）ping 
 - -c ping：ping 的次数
 - -l ：每次ping的时间间隔
@@ -57,7 +56,7 @@ d r w x r - x r -x
 - natstat -ntlp: 所有网络信息全部显示
 （如果没有这个命令，可以进行安装 yum install net-tools）
 
-3.性能
+## 3.性能
 1）top：持续监视系统性能（实时监控）
 
 2）ps ：查看进程信息（快照）
