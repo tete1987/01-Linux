@@ -1,28 +1,39 @@
-十、Linux实战-抽奖脚本编写
-1.前提：已创建有名单的文件 例如：tmp.txt 文件
+# 九、Linux实战-抽奖脚本编写
+1.前提：已创建有名单的文件 
+
+例如：tmp.txt 文件
+
 2.解题思路：
-  1）首先，读取名单文件
+
+1）首先，读取名单文件
+```
 #!/bin/bash
 seeds=`while read line;do echo $line;done < tmp.txt`
 echo $seeds
-
+```
 结果：读取文件之后，发现有的人员名称中有空格，需要将空格替换为“..”
-  2)替换人员姓名中的空格
+
+ 2)替换人员姓名中的空格
+ ```
  #!/bin/bash
  seeds=`while read line;do echo ${line// /..};done < tmp.txt`
  echo $seeds
-
+```
   此处也可以使用sed处理。
- 3)将脚本放置函数中：
+  
+3)将脚本放置函数中：
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
   local count=0
 }
 rand
-
+```
 bash语言中默认所有变量为全局变量，加local之后变更为局部变量。
+
 4）从seeds中筛选出一部分人
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
@@ -35,10 +46,14 @@ rand(){
 }
 
 rand
+```
+RANDOM 是一个随机数，任何一个数字对2取余之后只有1或0 的结果。
+当结果为0 时，&& 的结果为空，不进行打印；当为1时进行打印。
 
-RANDOM 是一个随机数，任何一个数字对2取余之后只有1或0 的结果。当结果为0 时，&& 的结果为空，不进行打印；当为1时进行打印。
 结果：运行之后会出现一个bug，会有一定的几率全部不打印，结果为空。
+
 5）需增加去掉空白脚本：
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
@@ -55,9 +70,13 @@ rand(){
 }
 
 rand
+```
 
-6)执行该脚本20次：for ((i=0;i<20;i++));do bash lottery.sh ; done
+6)执行该脚本20次：
+`for ((i=0;i<20;i++));do bash lottery.sh ; done`
+
 7)增加实现筛选出多个人：
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
@@ -81,9 +100,11 @@ res(){
 }
 res
 rand
-
+```
 注：打印数组所有内容：arrs[@]
+
 8）实现去重：
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
@@ -119,9 +140,10 @@ is_repeat(){
 }
 res
 rand
-
+```
 
 9）增加实现从脚本外面传参数到脚本中，来筛选个数：
+```
 #!/bin/bash
 rand(){
   local seeds=`while read line;do echo ${line// /..} ;done < tmp.txt`    
@@ -157,9 +179,10 @@ is_repeat(){
 }
 res $1
 rand
-
+```
 
 最终脚本：
+```
 #!/bin/bash
 #筛选出一个人
 rand(){
@@ -215,4 +238,5 @@ is_repeat(){
 #此处$1 是传的参数的第一个值
 res $1
 rand
+```
 
