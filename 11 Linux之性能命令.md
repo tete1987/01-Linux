@@ -1,6 +1,7 @@
 # 十一、Linux之性能命令
 ## 一、总体态势
-![image](2E0EA873BFF44F619093960747A51BF1)
+![linux总体态势](https://github.com/tete1987/picture_resource/blob/master/linux%E6%80%BB%E4%BD%93%E6%80%81%E5%8A%BF.png)
+
 
 ## 二、技术要点
 ### 1.安装
@@ -41,9 +42,13 @@
  cat /ect/group | wc -l
 
 ### 4.深入理解负载：
-1）cpu==1
+1）
+
+- cpu==1
+
 load average == 1, cpu 时刻在用
-       cpu==4
+
+- cpu==4
 load average ==1,cpu 只使用25%
 
 2）平均负载：
@@ -56,19 +61,21 @@ load average ==1,cpu 只使用25%
 `dmesg | tail`
 
 显示系统信息：
-![image](4A72C30A3BED431CB43FC0A7695DD86F)
+![linux-dmesg](https://github.com/tete1987/picture_resource/blob/master/linux-dmesg.png)
 
 ### 6.vmstat 1
-![image](A488781936DA4533B294805DDA26E12D)
+![linux-vmstat](https://github.com/tete1987/picture_resource/blob/master/linux-vmstat.png)
 
 注解：
 r:可运行进程数
+
 b:block表示进程被cpu以外的状态给阻断了，比如是硬盘，网络，当我们进程发一个数据包，网速快很快就能发完，但是当网速太慢，就会导致b的状态
+
 swpd：虚拟内存（交换区原理如图，图1为覆盖模式，图2为交互模式）
 
-![image](6003A6ACB22343A1BC2A37B0596E0596)
+![linux-交换区-覆盖](https://github.com/tete1987/picture_resource/blob/master/linux-%E4%BA%A4%E6%8D%A2%E5%8C%BA-%E8%A6%86%E7%9B%96.png)
 
-![image](0B5B647141AB4B4BA8B8AA549FED741A)
+![linux-交换区-交互](https://github.com/tete1987/picture_resource/blob/master/linux-%E4%BA%A4%E6%8D%A2%E5%8C%BA-%E4%BA%A4%E4%BA%92.png)
 
 
 - free：空闲内存
@@ -165,7 +172,9 @@ Implement priority paging in s in pre solaris 8 versions by adding line "set pri
 但是,并没有占用CPU时间,可以考虑应用程序,对于未占用CPU时间和一些后台的程序,释放内存的占用。
 
 ### 8.iostat 1 : 块设备（磁盘）的状况
-![image](B85FC7D7A58F425DA599578E2D919DB2)
+
+![linux-iostat](https://github.com/tete1987/picture_resource/blob/master/linux-iostat.png)
+
 1）tps：每秒进程下发的IO读、写请求数量
 
 2）kB_read/s:每秒从驱动器读入的数据量
@@ -182,14 +191,15 @@ Implement priority paging in s in pre solaris 8 versions by adding line "set pri
     
 2）设备是由udev进行管理，udev配置文件
    `/etc/udev/udev.conf`
-![image](B277CD86716549E584A198BF5CFBE122)
 
-![image](BDE562B03F554243ACCA3851FBAA5A4A)
+![linux-理解iowait1](https://github.com/tete1987/picture_resource/blob/master/linux-%E7%90%86%E8%A7%A3iowait1.png)
 
+![linux-理解iowait2](https://github.com/tete1987/picture_resource/blob/master/linux-%E7%90%86%E8%A7%A3iowait2.png)
 
 
 ### 10.free -m
-![image](755169BFC79D4166B5ED6FCC57E79B66)
+
+![linux-free-m](https://github.com/tete1987/picture_resource/blob/master/linux-free-m.png)
 
 ### 11.top
 -n ：获取多次CPU的执行情况，top -n 4 只更新4次
